@@ -1,0 +1,31 @@
+[package]
+name = "zecpay"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal private shielded invoice & payment request tool for Zcash"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Web server & Async runtime
+tokio = { version = "1", features = ["full"] }
+axum = { version = "0.8", features = ["json"] }
+tower-http = { version = "0.6", features = ["cors", "fs", "trace"] }
+
+# Serialization & Utilities
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.13", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+reqwest = { version = "0.12", features = ["json"] }
+url = "2.5"
+base64 = "0.22"
+
+# Zcash crates (official librustzcash)
+zcash_primitives = "0.31"
+zcash_address = "0.14"
+zcash_protocol = "0.11"
+
+[dev-dependencies]
+tokio-test = "0.4"

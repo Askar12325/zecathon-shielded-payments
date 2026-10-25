@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZECPAY // SHIELDED CHECKOUT</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container" style="max-width: 620px;">
+    <header>
+      <div class="terminal-header">[GATEWAY] :: ZERO-KNOWLEDGE SHIELDED CHECKOUT</div>
+      <h1 style="font-size: 1.85rem;">ZECPAY // CHECKOUT<span class="cursor"></span></h1>
+      <p>[&gt;] Fully private on-chain transaction. Scan with ZODL, Zashi, or YWallet.</p>
+    </header>
+
+    <div id="loadingCard" class="card" style="text-align: center; padding: 2.5rem 1rem;">
+      <p style="color: var(--text-dim);">[CONNECTING TO TERMINAL &amp; FETCHING INVOICE...]</p>
+    </div>
+
+    <div id="errorCard" class="card" style="display: none; text-align: center;">
+      <h2 style="color: var(--danger); margin-bottom: 0.5rem;">[!] INVOICE NOT FOUND</h2>
+      <p id="errorMsg" style="color: var(--text-dim); margin-bottom: 1.5rem;">The specified payment request does not exist or has expired.</p>
+      <a href="/" class="btn btn-secondary btn-block">[← RETURN TO TERMINAL]</a>
+    </div>
+
+    <!-- Main Checkout Card -->
+    <div id="checkoutCard" class="card" style="display: none;">
+      <div class="card-title">
+        <span>[&gt;] PAYMENT REQUEST</span>
+        <div id="statusBadge">
+          <span class="badge badge-pending"><span class="pulse-dot"></span> [WAITING_FOR_PAYMENT]</span>
+        </div>
+      </div>
+
+      <div class="invoice-result">
+        <div class="amount-display" id="checkoutAmount">0.00 ZEC</div>
+        <div class="memo-display" id="checkoutMemo"></div>
+
+        <!-- High contrast pure white background QR for mobile camera detection -->
+        <div class="qr-wrapper" id="checkoutQrcode"></div>
+
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1rem;">
+          [&gt;] Scan QR code with shielded wallet or click to launch:
+        </p>
+
+        <div class="actions-row" style="margin-bottom: 1.25rem;">
+          <a href="#" id="openWalletBtn" class="btn btn-primary" style="flex: 1;">[PAY WITH WALLET]</a>
+          <button type="button" class="btn btn-secondary" id="copyUriBtn" style="flex: 1;">[COPY URI]</button>
+        </div>
+
+        <label style="font-size: 0.75rem; width: 100%; text-align: left;">[&gt;] ENCODED ZIP-321 URI</label>
+        <div class="uri-box" id="checkoutUri"></div>
+
+        <!-- Collapsible Demo Settlement Tool (Subtle & Secondary) -->
+        <details class="demo-tools">
+          <summary>[+] DEMO TOOLS // MANUAL SETTLEMENT</summary>
+          <div class="demo-tools-content">
+            <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+              Simulate instant shielded payment confirmation without waiting for block discovery:
+            </p>
+            <div class="demo-tools-row">
+              <input type="text" id="demoTxid" placeholder="Optional TxID (or leave blank for random hash)" style="font-size: 0.8rem; padding: 0.5rem 0.75rem; flex: 1;">
+              <button type="button" id="confirmPaymentBtn" class="btn btn-secondary" style="white-space: nowrap; font-size: 0.75rem; padding: 0.5rem 0.85rem;">
+                [CONFIRM TX]
+              </button>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 1rem;">
+      <a href="/" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none;">[← RETURN TO MERCHANT DASHBOARD]</a>
+    </div>
+
+    <footer>
+      <p>Built for ZECATHON 2026 • Shielded Payments Track</p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">[!] COPIED TO CLIPBOARD</div>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

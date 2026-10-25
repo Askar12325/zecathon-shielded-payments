@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZECPAY // SHIELDED INVOICE TERMINAL</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="terminal-header">[SYS_INIT] :: ZECATHON SHIELDED PAYMENTS // TESTNET_ACTIVE</div>
+      <h1>ZECPAY // INVOICE TERMINAL<span class="cursor"></span></h1>
+      <p>[&gt;] Issue private shielded payment requests via ZIP-321 &amp; Unified Addresses</p>
+    </header>
+
+    <!-- How Privacy Works Section -->
+    <div class="card">
+      <div class="card-title">
+        <span>[00] // ZERO-KNOWLEDGE PRIVACY ARCHITECTURE</span>
+      </div>
+      <div class="privacy-info">
+        <p>[&gt;] Shielded payments on Zcash protect both customer and merchant:</p>
+        <ul>
+          <li><strong>Zero Payer Trace:</strong> Transactions from shielded wallets (Orchard / Sapling) encrypt the sender's address, transfer amount, and memo on-chain.</li>
+          <li><strong>Merchant Isolation:</strong> The merchant <em>never</em> sees or records your wallet address. Settlement is detected privately using an Incoming Viewing Key (IVK).</li>
+          <li><strong>ZIP-321 Standard:</strong> Standardized URI payment requests work directly with any shielded Zcash wallet with zero intermediary risk.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Create Invoice Card -->
+    <div class="card">
+      <div class="card-title">
+        <span>[01] // CREATE SHIELDED INVOICE</span>
+        <span style="font-size: 0.75rem; color: var(--text-dim);">PROTOCOL: ZIP-321</span>
+      </div>
+      <form id="createInvoiceForm">
+        <div class="form-group">
+          <label for="amount">[&gt;] AMOUNT (ZEC) *</label>
+          <input type="number" id="amount" name="amount" step="0.00000001" min="0.00000001" placeholder="0.05000000" required>
+        </div>
+        <div class="form-group">
+          <label for="memo">[&gt;] MEMO / ORDER REF (OPTIONAL, MAX 512 BYTES)</label>
+          <input type="text" id="memo" name="memo" placeholder="e.g. INV-2026-001 // Private Consultation" maxlength="400">
+        </div>
+        <button type="submit" id="createBtn" class="btn btn-primary btn-block">
+          [+] GENERATE PAYMENT REQUEST
+        </button>
+      </form>
+    </div>
+
+    <!-- Generated Invoice Display Card -->
+    <div id="invoiceResultCard" class="card" style="display: none;">
+      <div class="card-title">
+        <span>[02] // PAYMENT REQUEST READY</span>
+        <span class="badge badge-pending"><span class="pulse-dot"></span> [WAITING_FOR_PAYMENT]</span>
+      </div>
+      <div class="invoice-result">
+        <div class="amount-display" id="resAmount">0.00 ZEC</div>
+        <div class="memo-display" id="resMemo"></div>
+
+        <!-- Rendered QR Code (Pure white background for perfect contrast scanning) -->
+        <div class="qr-wrapper" id="qrcode"></div>
+
+        <label style="margin-top: 0.5rem; width: 100%; text-align: left;">[&gt;] ZIP-321 URI (SHIELDED PAYMENT REQUEST)</label>
+        <div class="uri-box" id="resUri"></div>
+
+        <div class="actions-row">
+          <button type="button" class="btn btn-secondary" id="copyUriBtn">[COPY URI]</button>
+          <a href="#" id="viewCheckoutBtn" target="_blank" class="btn btn-primary">[OPEN CHECKOUT PAGE →]</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Invoices Table -->
+    <div class="card">
+      <div class="card-title">
+        <span>[03] // INVOICE REGISTRY</span>
+        <button type="button" class="btn btn-secondary" id="refreshBtn" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">[REFRESH LOG]</button>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>AMOUNT</th>
+              <th>MEMO / REF</th>
+              <th>STATUS</th>
+              <th>LINK</th>
+            </tr>
+          </thead>
+          <tbody id="invoicesTableBody">
+            <tr>
+              <td colspan="5" class="empty-state">[QUERYING INVOICE LOG...]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer>
+      <p>Built for ZECATHON 2026 • Shielded Payments Track</p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">[!] COPIED TO CLIPBOARD</div>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
