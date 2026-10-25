@@ -5,7 +5,7 @@ WORKDIR /app
 # Install build dependencies for C crates (secp256k1, etc.)
 RUN apt-get update && apt-get install -y build-essential pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*
 
-COPY Cargo.toml Cargo.lock ./
+COPY Cargo.toml Cargo.lock* ./
 COPY src ./src
 COPY tests ./tests
 
