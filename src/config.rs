@@ -13,8 +13,9 @@ pub struct Config {
 impl Config {
     pub fn from_env() -> Self {
         Self {
-            server_host: env::var("SERVER_HOST").unwrap_or_else(|_| "127.0.0.1".into()),
-            server_port: env::var("SERVER_PORT")
+            server_host: env::var("SERVER_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
+            server_port: env::var("PORT")
+                .or_else(|_| env::var("SERVER_PORT"))
                 .ok()
                 .and_then(|p| p.parse().ok())
                 .unwrap_or(3000),
